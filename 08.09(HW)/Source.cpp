@@ -11,18 +11,18 @@ private:
 public:
 	MyString();
 	MyString(const char*);
-	MyString(MyString &);
+	MyString(const MyString &);
 	~MyString();
 	static void ObjCount();
 	void Init();
 	void Print();
-	void MyStrcpy(MyString& obj);
+	void MyStrcpy(const MyString& obj);
 	bool MyStrStr(const char* Substr);
 	int  MyChr(char c);
 	int MyStrLen();
-	void MyStrCat(MyString& b);
+	void MyStrCat(const MyString& b);
 	void MyDelChr(char c);
-	int MyStrCmp(MyString& b);
+	int MyStrCmp(const MyString& b);
 };
 int MyString::obj_count = 0;
 
@@ -35,21 +35,13 @@ MyString::MyString()
 
 MyString::MyString(const char* text)
 {
-	if (str != nullptr)
-	{
-		delete[]str;
-	}
 	str = new char[strlen(text) + 1];
 	strcpy_s(str, strlen(text) + 1, text);
 	length = strlen(text);
 	obj_count++;
 }
-MyString::MyString(MyString& obj)
+MyString::MyString(const MyString& obj)
 {
-	if (str != nullptr)
-	{
-		delete[]str;
-	}
 	str = new char[strlen(obj.str) + 1];
 	strcpy_s(str, strlen(obj.str) + 1, obj.str);
 	length = strlen(obj.str);
@@ -83,7 +75,7 @@ void MyString::Init()
 	delete[]text;
 }
 
-void MyString::MyStrcpy(MyString& obj)
+void MyString::MyStrcpy(const MyString& obj)
 {
 	if (str != nullptr)
 	{
@@ -116,7 +108,7 @@ int MyString::MyStrLen()
 	return strlen(str);
 }
 
-void MyString::MyStrCat(MyString& b)
+void MyString::MyStrCat(const MyString& b)
 {
 	strcat_s(str, strlen(str) + strlen(b.str) + 1, b.str);
 	length = strlen(str);
@@ -152,7 +144,7 @@ void MyString::MyDelChr(char c)
 	delete[]buff;
 }
 
-int MyString::MyStrCmp(MyString& b)
+int MyString::MyStrCmp(const MyString& b)
 {
 	if (strlen(str) > strlen(b.str))
 		return 1;
